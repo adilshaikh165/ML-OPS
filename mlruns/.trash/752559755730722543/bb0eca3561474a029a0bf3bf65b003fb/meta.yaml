@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/752559755730722543/bb0eca3561474a029a0bf3bf65b003fb/artifacts
+deleted_time: 1688653572119
+end_time: 1688583375197
+entry_point_name: ''
+experiment_id: '752559755730722543'
+lifecycle_stage: deleted
+run_id: bb0eca3561474a029a0bf3bf65b003fb
+run_name: bright-duck-902
+run_uuid: bb0eca3561474a029a0bf3bf65b003fb
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688583370758
+status: 3
+tags: []
+user_id: Adil Shaikh

@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/697407100955019670/d749bb44789945898ed63d49d45dca46/artifacts
+end_time: 1688652554571
+entry_point_name: ''
+experiment_id: '697407100955019670'
+lifecycle_stage: active
+run_id: d749bb44789945898ed63d49d45dca46
+run_name: funny-dove-529
+run_uuid: d749bb44789945898ed63d49d45dca46
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688652548560
+status: 3
+tags: []
+user_id: Adil Shaikh

@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/752559755730722543/da8b15af5d704bb48408be4a4eef10b1/artifacts
+deleted_time: 1688653572119
+end_time: 1688583881628
+entry_point_name: ''
+experiment_id: '752559755730722543'
+lifecycle_stage: deleted
+run_id: da8b15af5d704bb48408be4a4eef10b1
+run_name: sincere-owl-614
+run_uuid: da8b15af5d704bb48408be4a4eef10b1
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688583876668
+status: 3
+tags: []
+user_id: Adil Shaikh

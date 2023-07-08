@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/139127969964003875/7bf747d796c64604994a6c628f46254f/artifacts
+deleted_time: 1688653568688
+end_time: 1688584436915
+entry_point_name: ''
+experiment_id: '139127969964003875'
+lifecycle_stage: deleted
+run_id: 7bf747d796c64604994a6c628f46254f
+run_name: adaptable-owl-272
+run_uuid: 7bf747d796c64604994a6c628f46254f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688584433229
+status: 3
+tags: []
+user_id: Adil Shaikh

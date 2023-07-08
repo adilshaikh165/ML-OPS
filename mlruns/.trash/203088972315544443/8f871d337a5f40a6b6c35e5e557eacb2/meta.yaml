@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/203088972315544443/8f871d337a5f40a6b6c35e5e557eacb2/artifacts
+deleted_time: 1688712838588
+end_time: 1688710364271
+entry_point_name: ''
+experiment_id: '203088972315544443'
+lifecycle_stage: deleted
+run_id: 8f871d337a5f40a6b6c35e5e557eacb2
+run_name: able-sheep-619
+run_uuid: 8f871d337a5f40a6b6c35e5e557eacb2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688710356444
+status: 3
+tags: []
+user_id: Adil Shaikh

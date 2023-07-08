@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/443374650022700408/9a4fbd185fef45caa70c8c9ecc28addd/artifacts
+deleted_time: 1688712842134
+end_time: 1688704772625
+entry_point_name: ''
+experiment_id: '443374650022700408'
+lifecycle_stage: deleted
+run_id: 9a4fbd185fef45caa70c8c9ecc28addd
+run_name: learned-bear-818
+run_uuid: 9a4fbd185fef45caa70c8c9ecc28addd
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688704767115
+status: 3
+tags: []
+user_id: Adil Shaikh

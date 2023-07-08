@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/362384808535496993/a3f9e59f2096417dafff8a23f10846f4/artifacts
+end_time: 1688712903632
+entry_point_name: ''
+experiment_id: '362384808535496993'
+lifecycle_stage: active
+run_id: a3f9e59f2096417dafff8a23f10846f4
+run_name: caring-wasp-921
+run_uuid: a3f9e59f2096417dafff8a23f10846f4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688712896395
+status: 3
+tags: []
+user_id: Adil Shaikh

@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/360991298675716337/4a8e9880063d47fa925cf9c563270895/artifacts
+end_time: 1688653550360
+entry_point_name: ''
+experiment_id: '360991298675716337'
+lifecycle_stage: active
+run_id: 4a8e9880063d47fa925cf9c563270895
+run_name: unruly-mouse-861
+run_uuid: 4a8e9880063d47fa925cf9c563270895
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688653542927
+status: 3
+tags: []
+user_id: Adil Shaikh

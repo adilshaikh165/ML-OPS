@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/203088972315544443/b50ff5da4281445aa12ecf3614099b48/artifacts
+deleted_time: 1688712838588
+end_time: 1688705979795
+entry_point_name: ''
+experiment_id: '203088972315544443'
+lifecycle_stage: deleted
+run_id: b50ff5da4281445aa12ecf3614099b48
+run_name: bold-snipe-785
+run_uuid: b50ff5da4281445aa12ecf3614099b48
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688705973432
+status: 3
+tags: []
+user_id: Adil Shaikh

@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/752559755730722543/47bb1471877945d396a23b2a357a7d5f/artifacts
+deleted_time: 1688653572119
+end_time: 1688583593196
+entry_point_name: ''
+experiment_id: '752559755730722543'
+lifecycle_stage: deleted
+run_id: 47bb1471877945d396a23b2a357a7d5f
+run_name: overjoyed-pug-297
+run_uuid: 47bb1471877945d396a23b2a357a7d5f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688583587350
+status: 3
+tags: []
+user_id: Adil Shaikh

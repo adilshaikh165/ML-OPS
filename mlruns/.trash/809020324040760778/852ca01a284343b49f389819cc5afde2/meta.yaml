@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/809020324040760778/852ca01a284343b49f389819cc5afde2/artifacts
+deleted_time: 1688653564216
+end_time: 1688618250233
+entry_point_name: ''
+experiment_id: '809020324040760778'
+lifecycle_stage: deleted
+run_id: 852ca01a284343b49f389819cc5afde2
+run_name: tasteful-lamb-13
+run_uuid: 852ca01a284343b49f389819cc5afde2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688618244036
+status: 3
+tags: []
+user_id: Adil Shaikh

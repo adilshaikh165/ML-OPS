@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/301056670605457976/ec3e30217b1940018c55cbf6546869c9/artifacts
+deleted_time: 1688712845816
+end_time: 1688700484975
+entry_point_name: ''
+experiment_id: '301056670605457976'
+lifecycle_stage: deleted
+run_id: ec3e30217b1940018c55cbf6546869c9
+run_name: handsome-crane-413
+run_uuid: ec3e30217b1940018c55cbf6546869c9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688700479414
+status: 3
+tags: []
+user_id: Adil Shaikh

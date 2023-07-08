@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/139127969964003875/cfbd3ddc260145ce989cc4046576ba2a/artifacts
+deleted_time: 1688653568688
+end_time: 1688584802824
+entry_point_name: ''
+experiment_id: '139127969964003875'
+lifecycle_stage: deleted
+run_id: cfbd3ddc260145ce989cc4046576ba2a
+run_name: learned-stag-346
+run_uuid: cfbd3ddc260145ce989cc4046576ba2a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688584798658
+status: 3
+tags: []
+user_id: Adil Shaikh

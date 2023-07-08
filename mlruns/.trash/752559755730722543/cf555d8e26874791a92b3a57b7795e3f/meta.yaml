@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/752559755730722543/cf555d8e26874791a92b3a57b7795e3f/artifacts
+deleted_time: 1688653572119
+end_time: 1688581979811
+entry_point_name: ''
+experiment_id: '752559755730722543'
+lifecycle_stage: deleted
+run_id: cf555d8e26874791a92b3a57b7795e3f
+run_name: bemused-fowl-973
+run_uuid: cf555d8e26874791a92b3a57b7795e3f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688581974638
+status: 4
+tags: []
+user_id: Adil Shaikh

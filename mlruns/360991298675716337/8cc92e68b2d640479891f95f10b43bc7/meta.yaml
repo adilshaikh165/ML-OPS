@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/360991298675716337/8cc92e68b2d640479891f95f10b43bc7/artifacts
+end_time: 1688655909505
+entry_point_name: ''
+experiment_id: '360991298675716337'
+lifecycle_stage: active
+run_id: 8cc92e68b2d640479891f95f10b43bc7
+run_name: merciful-quail-180
+run_uuid: 8cc92e68b2d640479891f95f10b43bc7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688655902141
+status: 3
+tags: []
+user_id: Adil Shaikh

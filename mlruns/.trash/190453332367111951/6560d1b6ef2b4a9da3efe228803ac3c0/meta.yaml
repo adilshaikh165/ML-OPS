@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/190453332367111951/6560d1b6ef2b4a9da3efe228803ac3c0/artifacts
+deleted_time: 1688712849264
+end_time: 1688700200807
+entry_point_name: ''
+experiment_id: '190453332367111951'
+lifecycle_stage: deleted
+run_id: 6560d1b6ef2b4a9da3efe228803ac3c0
+run_name: ambitious-loon-981
+run_uuid: 6560d1b6ef2b4a9da3efe228803ac3c0
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688700193032
+status: 3
+tags: []
+user_id: Adil Shaikh

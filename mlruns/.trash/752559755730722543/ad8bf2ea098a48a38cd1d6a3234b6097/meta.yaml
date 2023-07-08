@@ -1,0 +1,16 @@
+artifact_uri: file:///C:/Users/Adil%20Shaikh/Desktop/MLOPS/mlruns/752559755730722543/ad8bf2ea098a48a38cd1d6a3234b6097/artifacts
+deleted_time: 1688653572119
+end_time: 1688584398481
+entry_point_name: ''
+experiment_id: '752559755730722543'
+lifecycle_stage: deleted
+run_id: ad8bf2ea098a48a38cd1d6a3234b6097
+run_name: gregarious-mink-417
+run_uuid: ad8bf2ea098a48a38cd1d6a3234b6097
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1688584393936
+status: 3
+tags: []
+user_id: Adil Shaikh
