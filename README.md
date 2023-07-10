@@ -266,7 +266,7 @@ kf-pipeline.ipynb
 
 - Generation of train-test split. train_test_split splits the dataset into a training set and a test set.
   
-    ![Step3](https://github.com/adilshaikh165/ML-OPS/assets/98637502/65cdf7fe-9cbe-429b-94bd-69dad2047b28)
+    ![Train_test_split](https://github.com/adilshaikh165/ML-OPS/assets/98637502/b7d5aead-1d30-47fd-bde4-10e2920ae359)
 
 - Training of Basic classifier model. classifier_training trains a logistic regression model on the training set. This step involves conversion of data type String into float for columns "job" and "married".
 
