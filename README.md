@@ -201,6 +201,81 @@ This time along with the Metrics, tags and artifcats you'll also get to log all 
 
 ![Optimized_params](https://github.com/adilshaikh165/ML-OPS/assets/98637502/4d727455-2a69-4b2d-8be0-78600b84a58d)
 
+## 5. Creating the Ml Pipeline using Kubeflow Pipeline
+
+Kubeflow Pipelines (KFP) is the most used component of Kubeflow. It allows you to create for every step or function in your ML project a reusable containerized pipeline component which can be chained together as a ML pipeline.
+
+For the digits recognizer application, the pipeline is already created with the Python SDK. You can find the code in the file
+```bash
+kf-pipeline.ipynb
+```
+
+- Write a Python Function needed to train and predict
+  
+  We need to create a various functions in order to train and predict our ML Model. The various functions are prepare_data(), train_test_split(), 
+ training_basic_classifier(), predict_on_test_data(), predict_prob_on_test_data() and get_metrics(). You can find all these functions in "kf-pipeline.ipynb" file.
+
+- Define the pipeline function and put together all the components
+
+  ```bash
+     @dsl.pipeline(
+      name='Basic MLOPS classifier Kubeflow Demo Pipeline',
+      description='A sample pipeline that performs IRIS classifier task'
+     )
+   
+     def basic_classifier_pipeline(data_path: str):
+       vop = dsl.VolumeOp(
+       name="t-vol-1",
+       resource_name="t-vol-1", 
+       size="1Gi", 
+       modes=dsl.VOLUME_MODE_RWO)
+       
+       prepare_data_task = create_step_prepare_data().add_pvolumes({data_path: vop.volume})
+       train_test_split = create_step_train_test_split().add_pvolumes({data_path: vop.volume}).after(prepare_data_task)
+       classifier_training = create_step_training_basic_classifier().add_pvolumes({data_path: vop.volume}).after(train_test_split)
+       log_predicted_class = create_step_predict_on_test_data().add_pvolumes({data_path: vop.volume}).after(classifier_training)
+       log_predicted_probabilities = create_step_predict_prob_on_test_data().add_pvolumes({data_path: vop.volume}).after(log_predicted_class)
+       log_metrics_task = create_step_get_metrics().add_pvolumes({data_path: vop.volume}).after(log_predicted_probabilities)
+   
+       
+       prepare_data_task.execution_options.caching_strategy.max_cache_staleness = "P0D"
+       train_test_split.execution_options.caching_strategy.max_cache_staleness = "P0D"
+       classifier_training.execution_options.caching_strategy.max_cache_staleness = "P0D"
+       log_predicted_class.execution_options.caching_strategy.max_cache_staleness = "P0D"
+       log_predicted_probabilities.execution_options.caching_strategy.max_cache_staleness = "P0D"
+       log_metrics_task.execution_options.caching_strategy.max_cache_staleness = "P0D"
+  
+    ```
+
+- Mounting volume for component's output storage and binding this volume with all the components.
+
+- Compiling pipeline and generating yaml
+
+  Once the pipeline is complied the yaml file is automatically generated and it can be directly uploaded to kubeflow and create experiments and runs using UI. You can refer the sample yaml file in the GitHub repo named as "basic_classifier_pipeline_adil.yaml".
+
+- Create a run from pipeline function using the code.
+ 
+- Creation of the Persistent Volume
+  
+    ![Step1](https://github.com/adilshaikh165/ML-OPS/assets/98637502/74027b94-f1fc-4a02-80b6-18821f8273aa)
+
+- Prepare Data for train-test split
+  
+    ![Step2](https://github.com/adilshaikh165/ML-OPS/assets/98637502/c6824c13-af6a-4300-bbb1-45cf2e0af2eb)
+
+- Generation of train-test split
+  
+    ![Step3](https://github.com/adilshaikh165/ML-OPS/assets/98637502/65cdf7fe-9cbe-429b-94bd-69dad2047b28)
+
+- Training of Basic classifier model
+  
+    ![Step4](https://github.com/adilshaikh165/ML-OPS/assets/98637502/0aa88e18-a3f2-4784-be37-c0091a6e6497)
+
+
+
+    
+
+
 
 
 
