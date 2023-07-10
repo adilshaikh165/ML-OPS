@@ -212,8 +212,8 @@ kf-pipeline.ipynb
 
 - Write a Python Function needed to train and predict
   
-  We need to create a various functions in order to train and predict our ML Model. The various functions are prepare_data(), train_test_split(), 
- training_basic_classifier(), predict_on_test_data(), predict_prob_on_test_data() and get_metrics(). You can find all these functions in "kf-pipeline.ipynb" file.
+  We need to create a various functions in order to train and predict our ML Model. The various functions are prepare_data(), train_test_split() and
+ training_basic_classifier(). You can find all these functions in "kf-pipeline.ipynb" file.
 
 - Define the pipeline function and put together all the components
 
@@ -233,17 +233,12 @@ kf-pipeline.ipynb
        prepare_data_task = create_step_prepare_data().add_pvolumes({data_path: vop.volume})
        train_test_split = create_step_train_test_split().add_pvolumes({data_path: vop.volume}).after(prepare_data_task)
        classifier_training = create_step_training_basic_classifier().add_pvolumes({data_path: vop.volume}).after(train_test_split)
-       log_predicted_class = create_step_predict_on_test_data().add_pvolumes({data_path: vop.volume}).after(classifier_training)
-       log_predicted_probabilities = create_step_predict_prob_on_test_data().add_pvolumes({data_path: vop.volume}).after(log_predicted_class)
-       log_metrics_task = create_step_get_metrics().add_pvolumes({data_path: vop.volume}).after(log_predicted_probabilities)
-   
+       
        
        prepare_data_task.execution_options.caching_strategy.max_cache_staleness = "P0D"
        train_test_split.execution_options.caching_strategy.max_cache_staleness = "P0D"
        classifier_training.execution_options.caching_strategy.max_cache_staleness = "P0D"
-       log_predicted_class.execution_options.caching_strategy.max_cache_staleness = "P0D"
-       log_predicted_probabilities.execution_options.caching_strategy.max_cache_staleness = "P0D"
-       log_metrics_task.execution_options.caching_strategy.max_cache_staleness = "P0D"
+       
   
     ```
 
@@ -278,13 +273,6 @@ kf-pipeline.ipynb
   I have mapped various attributes of the column "job" into the static float values and perform "One-hot" encoding on marital column.
   
     ![Step4](https://github.com/adilshaikh165/ML-OPS/assets/98637502/0aa88e18-a3f2-4784-be37-c0091a6e6497)
-
-- Prediction on test data. log_predicted_class predicts the class of the test instances and saves the predictions to a file.
-
-- Prediction Probability on test data. log_predicted_probabilities predicts the probabilities of the test instances belonging to each class and saves the probabilities to a file.
-
-- Get metrics. log_metrics_task calculates the accuracy, precision, recall, and entropy of the model and saves the metrics to a file.
-
 
 
 ## 6. Kubernetes Deployment for the Best Model.(OPTIONAL)
