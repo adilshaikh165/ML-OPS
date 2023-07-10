@@ -273,7 +273,9 @@ kf-pipeline.ipynb
   
     ![Step3](https://github.com/adilshaikh165/ML-OPS/assets/98637502/65cdf7fe-9cbe-429b-94bd-69dad2047b28)
 
-- Training of Basic classifier model. classifier_training trains a logistic regression model on the training set.
+- Training of Basic classifier model. classifier_training trains a logistic regression model on the training set. This step involves conversion of data type String into float for columns "job" and "married".
+
+  I have mapped various attributes of the column "job" into the static float values and perform "One-hot" encoding on marital column.
   
     ![Step4](https://github.com/adilshaikh165/ML-OPS/assets/98637502/0aa88e18-a3f2-4784-be37-c0091a6e6497)
 
