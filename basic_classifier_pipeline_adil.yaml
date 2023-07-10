@@ -1,0 +1,354 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Workflow
+metadata:
+  generateName: basic-mlops-classifier-kubeflow-demo-pipeline-
+  annotations: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.12, pipelines.kubeflow.org/pipeline_compilation_time: '2023-07-10T20:40:11.735685',
+    pipelines.kubeflow.org/pipeline_spec: '{"description": "A sample pipeline that
+      performs IRIS classifier task", "inputs": [{"name": "data_path", "type": "String"}],
+      "name": "Basic MLOPS classifier Kubeflow Demo Pipeline"}'}
+  labels: {pipelines.kubeflow.org/kfp_sdk_version: 1.8.12}
+spec:
+  entrypoint: basic-mlops-classifier-kubeflow-demo-pipeline
+  templates:
+  - name: basic-mlops-classifier-kubeflow-demo-pipeline
+    inputs:
+      parameters:
+      - {name: data_path}
+    dag:
+      tasks:
+      - name: prepare-data
+        template: prepare-data
+        dependencies: [t-vol-1]
+        arguments:
+          parameters:
+          - {name: data_path, value: '{{inputs.parameters.data_path}}'}
+          - {name: t-vol-1-name, value: '{{tasks.t-vol-1.outputs.parameters.t-vol-1-name}}'}
+      - {name: t-vol-1, template: t-vol-1}
+      - name: train-test-split
+        template: train-test-split
+        dependencies: [prepare-data, t-vol-1]
+        arguments:
+          parameters:
+          - {name: data_path, value: '{{inputs.parameters.data_path}}'}
+          - {name: t-vol-1-name, value: '{{tasks.t-vol-1.outputs.parameters.t-vol-1-name}}'}
+      - name: training-basic-classifier
+        template: training-basic-classifier
+        dependencies: [t-vol-1, train-test-split]
+        arguments:
+          parameters:
+          - {name: data_path, value: '{{inputs.parameters.data_path}}'}
+          - {name: t-vol-1-name, value: '{{tasks.t-vol-1.outputs.parameters.t-vol-1-name}}'}
+  - name: prepare-data
+    container:
+      args: []
+      command:
+      - sh
+      - -c
+      - (PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+        'pandas==1.2.4' 'numpy==1.21.0' || PIP_DISABLE_PIP_VERSION_CHECK=1 python3
+        -m pip install --quiet --no-warn-script-location 'pandas==1.2.4' 'numpy==1.21.0'
+        --user) && "$0" "$@"
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf "%s" "$0" > "$program_path"
+        python3 -u "$program_path" "$@"
+      - |
+        def prepare_data():
+            import pandas as pd
+        #     import sklearn
+        #     sklearn.__file__
+
+            print("---- Inside prepare_data component ----")
+            # Load dataset
+            df = pd.read_csv("https://raw.githubusercontent.com/TripathiAshutosh/dataset/main/banking.csv")
+            df = df.dropna()
+
+        #     #transfer data from string to integer
+        #     from sklearn.preprocessing import LabelEncoder
+
+        #     for column in df.columns:
+        #         if df[column].dtype == np.number:
+        #             continue
+        #     df[column] = LabelEncoder().fit_transform(df[column])
+
+            df.to_csv(f'data/final_df.csv', index=False)
+            print("\n ---- data csv is saved to PV location /data/final_df.csv ----")
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog='Prepare data', description='')
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = prepare_data(**_parsed_args)
+      image: python:3.7
+      volumeMounts:
+      - {mountPath: '{{inputs.parameters.data_path}}', name: t-vol-1}
+    inputs:
+      parameters:
+      - {name: data_path}
+      - {name: t-vol-1-name}
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.12
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: "true"
+      annotations: {pipelines.kubeflow.org/component_spec: '{"implementation": {"container":
+          {"args": [], "command": ["sh", "-c", "(PIP_DISABLE_PIP_VERSION_CHECK=1 python3
+          -m pip install --quiet --no-warn-script-location ''pandas==1.2.4'' ''numpy==1.21.0''
+          || PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+          ''pandas==1.2.4'' ''numpy==1.21.0'' --user) && \"$0\" \"$@\"", "sh", "-ec",
+          "program_path=$(mktemp)\nprintf \"%s\" \"$0\" > \"$program_path\"\npython3
+          -u \"$program_path\" \"$@\"\n", "def prepare_data():\n    import pandas
+          as pd\n#     import sklearn\n#     sklearn.__file__\n\n    print(\"----
+          Inside prepare_data component ----\")\n    # Load dataset\n    df = pd.read_csv(\"https://raw.githubusercontent.com/TripathiAshutosh/dataset/main/banking.csv\")\n    df
+          = df.dropna()\n\n#     #transfer data from string to integer\n#     from
+          sklearn.preprocessing import LabelEncoder\n\n#     for column in df.columns:\n#         if
+          df[column].dtype == np.number:\n#             continue\n#     df[column]
+          = LabelEncoder().fit_transform(df[column])\n\n    df.to_csv(f''data/final_df.csv'',
+          index=False)\n    print(\"\\n ---- data csv is saved to PV location /data/final_df.csv
+          ----\")\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=''Prepare
+          data'', description='''')\n_parsed_args = vars(_parser.parse_args())\n\n_outputs
+          = prepare_data(**_parsed_args)\n"], "image": "python:3.7"}}, "name": "Prepare
+          data"}', pipelines.kubeflow.org/component_ref: '{}', pipelines.kubeflow.org/max_cache_staleness: P0D}
+    volumes:
+    - name: t-vol-1
+      persistentVolumeClaim: {claimName: '{{inputs.parameters.t-vol-1-name}}'}
+  - name: t-vol-1
+    resource:
+      action: create
+      manifest: |
+        apiVersion: v1
+        kind: PersistentVolumeClaim
+        metadata:
+          name: '{{workflow.name}}-t-vol-1'
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+    outputs:
+      parameters:
+      - name: t-vol-1-manifest
+        valueFrom: {jsonPath: '{}'}
+      - name: t-vol-1-name
+        valueFrom: {jsonPath: '{.metadata.name}'}
+      - name: t-vol-1-size
+        valueFrom: {jsonPath: '{.status.capacity.storage}'}
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.12
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: "true"
+  - name: train-test-split
+    container:
+      args: []
+      command:
+      - sh
+      - -c
+      - (PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+        'pandas==1.2.4' 'numpy==1.21.0' 'scikit-learn==0.24.2' || PIP_DISABLE_PIP_VERSION_CHECK=1
+        python3 -m pip install --quiet --no-warn-script-location 'pandas==1.2.4' 'numpy==1.21.0'
+        'scikit-learn==0.24.2' --user) && "$0" "$@"
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf "%s" "$0" > "$program_path"
+        python3 -u "$program_path" "$@"
+      - |
+        def train_test_split():
+            import pandas as pd
+            import numpy as np
+            from sklearn.model_selection import train_test_split
+            print("---- Inside train_test_split component ----")
+            final_data = pd.read_csv(f'data/final_df.csv')
+            target_column = 'class'
+            X = final_data.loc[:, final_data.columns != 'y']
+            y = final_data.loc[:, final_data.columns == 'y']
+
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3,stratify = y, random_state=47)
+
+            np.save(f'data/X_train.npy', X_train)
+            np.save(f'data/X_test.npy', X_test)
+            np.save(f'data/y_train.npy', y_train)
+            np.save(f'data/y_test.npy', y_test)
+
+            print("\n---- X_train ----")
+            print("\n")
+            print(X_train)
+
+            print("\n---- X_test ----")
+            print("\n")
+            print(X_test)
+
+            print("\n---- y_train ----")
+            print("\n")
+            print(y_train)
+
+            print("\n---- y_test ----")
+            print("\n")
+            print(y_test)
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog='Train test split', description='')
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = train_test_split(**_parsed_args)
+      image: python:3.7
+      volumeMounts:
+      - {mountPath: '{{inputs.parameters.data_path}}', name: t-vol-1}
+    inputs:
+      parameters:
+      - {name: data_path}
+      - {name: t-vol-1-name}
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.12
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: "true"
+      annotations: {pipelines.kubeflow.org/component_spec: '{"implementation": {"container":
+          {"args": [], "command": ["sh", "-c", "(PIP_DISABLE_PIP_VERSION_CHECK=1 python3
+          -m pip install --quiet --no-warn-script-location ''pandas==1.2.4'' ''numpy==1.21.0''
+          ''scikit-learn==0.24.2'' || PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip
+          install --quiet --no-warn-script-location ''pandas==1.2.4'' ''numpy==1.21.0''
+          ''scikit-learn==0.24.2'' --user) && \"$0\" \"$@\"", "sh", "-ec", "program_path=$(mktemp)\nprintf
+          \"%s\" \"$0\" > \"$program_path\"\npython3 -u \"$program_path\" \"$@\"\n",
+          "def train_test_split():\n    import pandas as pd\n    import numpy as np\n    from
+          sklearn.model_selection import train_test_split\n    print(\"---- Inside
+          train_test_split component ----\")\n    final_data = pd.read_csv(f''data/final_df.csv'')\n    target_column
+          = ''class''\n    X = final_data.loc[:, final_data.columns != ''y'']\n    y
+          = final_data.loc[:, final_data.columns == ''y'']\n\n    X_train, X_test,
+          y_train, y_test = train_test_split(X, y, test_size=0.3,stratify = y, random_state=47)\n\n    np.save(f''data/X_train.npy'',
+          X_train)\n    np.save(f''data/X_test.npy'', X_test)\n    np.save(f''data/y_train.npy'',
+          y_train)\n    np.save(f''data/y_test.npy'', y_test)\n\n    print(\"\\n----
+          X_train ----\")\n    print(\"\\n\")\n    print(X_train)\n\n    print(\"\\n----
+          X_test ----\")\n    print(\"\\n\")\n    print(X_test)\n\n    print(\"\\n----
+          y_train ----\")\n    print(\"\\n\")\n    print(y_train)\n\n    print(\"\\n----
+          y_test ----\")\n    print(\"\\n\")\n    print(y_test)\n\nimport argparse\n_parser
+          = argparse.ArgumentParser(prog=''Train test split'', description='''')\n_parsed_args
+          = vars(_parser.parse_args())\n\n_outputs = train_test_split(**_parsed_args)\n"],
+          "image": "python:3.7"}}, "name": "Train test split"}', pipelines.kubeflow.org/component_ref: '{}',
+        pipelines.kubeflow.org/max_cache_staleness: P0D}
+    volumes:
+    - name: t-vol-1
+      persistentVolumeClaim: {claimName: '{{inputs.parameters.t-vol-1-name}}'}
+  - name: training-basic-classifier
+    container:
+      args: []
+      command:
+      - sh
+      - -c
+      - (PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip install --quiet --no-warn-script-location
+        'pandas==1.2.4' 'numpy==1.21.0' 'scikit-learn==0.24.2' || PIP_DISABLE_PIP_VERSION_CHECK=1
+        python3 -m pip install --quiet --no-warn-script-location 'pandas==1.2.4' 'numpy==1.21.0'
+        'scikit-learn==0.24.2' --user) && "$0" "$@"
+      - sh
+      - -ec
+      - |
+        program_path=$(mktemp)
+        printf "%s" "$0" > "$program_path"
+        python3 -u "$program_path" "$@"
+      - |
+        def training_basic_classifier():
+            import pandas as pd
+            import numpy as np
+            from sklearn.linear_model import LogisticRegression
+            from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+
+            print("---- Inside training_basic_classifier component ----")
+
+            X_train = pd.DataFrame()
+            X_train['age'] = [29, 32, 19, 52, 41]
+            X_train['job'] = ['admin.', 'admin.', 'student', 'management', 'blue-collar']
+            X_train['marital'] = ['single', 'married', 'single', 'married', 'married']
+
+            def convert_job_to_float(job_string):
+                job_mapping = {
+                    'admin.': 0,
+                    'student': 1,
+                    'management': 2,
+                    'blue-collar': 3
+                }
+                return job_mapping.get(job_string, np.nan)
+
+            X_train['job'] = X_train['job'].apply(convert_job_to_float)
+
+            # Perform one-hot encoding on the 'marital' column
+            marital_encoder = OneHotEncoder()
+            X_train_encoded = marital_encoder.fit_transform(X_train['marital'].values.reshape(-1, 1)).toarray()
+            X_train_encoded = pd.DataFrame(X_train_encoded, columns=marital_encoder.categories_[0])
+            X_train = pd.concat([X_train, X_train_encoded], axis=1)
+            X_train = X_train.drop('marital', axis=1)
+
+            print(X_train)
+
+            y_train = pd.DataFrame()
+            y_train['target'] = [0, 1, 0, 1, 1]  # Dummy target values for demonstration
+
+            classifier = LogisticRegression(max_iter=500)
+            classifier.fit(X_train, y_train.values.ravel())
+
+            import pickle
+            with open('data/model.pkl', 'wb') as f:
+                pickle.dump(classifier, f)
+
+            print("\nTraining basic classifier on data and saved to PV location /data/model.pkl")
+
+        import argparse
+        _parser = argparse.ArgumentParser(prog='Training basic classifier', description='')
+        _parsed_args = vars(_parser.parse_args())
+
+        _outputs = training_basic_classifier(**_parsed_args)
+      image: python:3.7
+      volumeMounts:
+      - {mountPath: '{{inputs.parameters.data_path}}', name: t-vol-1}
+    inputs:
+      parameters:
+      - {name: data_path}
+      - {name: t-vol-1-name}
+    metadata:
+      labels:
+        pipelines.kubeflow.org/kfp_sdk_version: 1.8.12
+        pipelines.kubeflow.org/pipeline-sdk-type: kfp
+        pipelines.kubeflow.org/enable_caching: "true"
+      annotations: {pipelines.kubeflow.org/component_spec: '{"implementation": {"container":
+          {"args": [], "command": ["sh", "-c", "(PIP_DISABLE_PIP_VERSION_CHECK=1 python3
+          -m pip install --quiet --no-warn-script-location ''pandas==1.2.4'' ''numpy==1.21.0''
+          ''scikit-learn==0.24.2'' || PIP_DISABLE_PIP_VERSION_CHECK=1 python3 -m pip
+          install --quiet --no-warn-script-location ''pandas==1.2.4'' ''numpy==1.21.0''
+          ''scikit-learn==0.24.2'' --user) && \"$0\" \"$@\"", "sh", "-ec", "program_path=$(mktemp)\nprintf
+          \"%s\" \"$0\" > \"$program_path\"\npython3 -u \"$program_path\" \"$@\"\n",
+          "def training_basic_classifier():\n    import pandas as pd\n    import numpy
+          as np\n    from sklearn.linear_model import LogisticRegression\n    from
+          sklearn.preprocessing import LabelEncoder, OneHotEncoder\n\n    print(\"----
+          Inside training_basic_classifier component ----\")\n\n    X_train = pd.DataFrame()\n    X_train[''age'']
+          = [29, 32, 19, 52, 41]\n    X_train[''job''] = [''admin.'', ''admin.'',
+          ''student'', ''management'', ''blue-collar'']\n    X_train[''marital'']
+          = [''single'', ''married'', ''single'', ''married'', ''married'']\n\n    def
+          convert_job_to_float(job_string):\n        job_mapping = {\n            ''admin.'':
+          0,\n            ''student'': 1,\n            ''management'': 2,\n            ''blue-collar'':
+          3\n        }\n        return job_mapping.get(job_string, np.nan)\n\n    X_train[''job'']
+          = X_train[''job''].apply(convert_job_to_float)\n\n    # Perform one-hot
+          encoding on the ''marital'' column\n    marital_encoder = OneHotEncoder()\n    X_train_encoded
+          = marital_encoder.fit_transform(X_train[''marital''].values.reshape(-1,
+          1)).toarray()\n    X_train_encoded = pd.DataFrame(X_train_encoded, columns=marital_encoder.categories_[0])\n    X_train
+          = pd.concat([X_train, X_train_encoded], axis=1)\n    X_train = X_train.drop(''marital'',
+          axis=1)\n\n    print(X_train)\n\n    y_train = pd.DataFrame()\n    y_train[''target'']
+          = [0, 1, 0, 1, 1]  # Dummy target values for demonstration\n\n    classifier
+          = LogisticRegression(max_iter=500)\n    classifier.fit(X_train, y_train.values.ravel())\n\n    import
+          pickle\n    with open(''data/model.pkl'', ''wb'') as f:\n        pickle.dump(classifier,
+          f)\n\n    print(\"\\nTraining basic classifier on data and saved to PV location
+          /data/model.pkl\")\n\nimport argparse\n_parser = argparse.ArgumentParser(prog=''Training
+          basic classifier'', description='''')\n_parsed_args = vars(_parser.parse_args())\n\n_outputs
+          = training_basic_classifier(**_parsed_args)\n"], "image": "python:3.7"}},
+          "name": "Training basic classifier"}', pipelines.kubeflow.org/component_ref: '{}',
+        pipelines.kubeflow.org/max_cache_staleness: P0D}
+    volumes:
+    - name: t-vol-1
+      persistentVolumeClaim: {claimName: '{{inputs.parameters.t-vol-1-name}}'}
+  arguments:
+    parameters:
+    - {name: data_path}
+  serviceAccountName: pipeline-runner
