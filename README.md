@@ -34,7 +34,7 @@ service (this is optional).
 
 ## Steps to be followed
 
-### 1. Deploy a Kubernetes Cluster and install Kubeflow
+### 1. Install and configure Kubeflow on Minikube cluster
 
 ### Prerequisites :
 
