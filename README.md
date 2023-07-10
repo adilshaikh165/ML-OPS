@@ -247,11 +247,17 @@ kf-pipeline.ipynb
   
     ```
 
-- Mounting volume for component's output storage and binding this volume with all the components.
+- Mounting volume for component's output storage and binding this volume with all the components. The pipeline defines a volume named "t-vol-1" with a size of 1GiB. This volume is used to store the dataset and the model artifacts.
 
 - Compiling pipeline and generating yaml
 
   Once the pipeline is complied the yaml file is automatically generated and it can be directly uploaded to kubeflow and create experiments and runs using UI. You can refer the sample yaml file in the GitHub repo named as "basic_classifier_pipeline_adil.yaml".
+
+  ```bash
+  kfp.compiler.Compiler().compile(
+    pipeline_func=basic_classifier_pipeline,
+    package_path='basic_classifier_pipeline_adil.yaml')
+  ```
 
 - Create a run from pipeline function using the code.
  
@@ -259,21 +265,39 @@ kf-pipeline.ipynb
   
     ![Step1](https://github.com/adilshaikh165/ML-OPS/assets/98637502/74027b94-f1fc-4a02-80b6-18821f8273aa)
 
-- Prepare Data for train-test split
+- Prepare Data for train-test split. prepare_data_task loads the dataset from a URL and saves it to a subdirectory called data in the pipeline's working directory.
   
     ![Step2](https://github.com/adilshaikh165/ML-OPS/assets/98637502/c6824c13-af6a-4300-bbb1-45cf2e0af2eb)
 
-- Generation of train-test split
+- Generation of train-test split. train_test_split splits the dataset into a training set and a test set.
   
     ![Step3](https://github.com/adilshaikh165/ML-OPS/assets/98637502/65cdf7fe-9cbe-429b-94bd-69dad2047b28)
 
-- Training of Basic classifier model
+- Training of Basic classifier model. classifier_training trains a logistic regression model on the training set.
   
     ![Step4](https://github.com/adilshaikh165/ML-OPS/assets/98637502/0aa88e18-a3f2-4784-be37-c0091a6e6497)
 
+- Prediction on test data. log_predicted_class predicts the class of the test instances and saves the predictions to a file.
+
+- Prediction Probability on test data. log_predicted_probabilities predicts the probabilities of the test instances belonging to each class and saves the probabilities to a file.
+
+- Get metrics. log_metrics_task calculates the accuracy, precision, recall, and entropy of the model and saves the metrics to a file.
 
 
-    
+
+## 6. Kubernetes Deployment for the Best Model.(OPTIONAL)
+
+Because of the time constraint I was not able to deploy the ML model on Kubernetes Cluster. But I was able to do it very easily because in my previous project I was done the same deployment only the difference was that was the Python Flask Application and not the ML Model. But the procedures are the same for deployment to the kubernetes cluster.
+The best model in our case is "Optimized Model" from step "4b".
+
+You can refer this blog of my previous project it contains all the deployment part to the kubernetes cluster and exposing it as service
+
+The procedure will be some what like this:
+
+![image](https://github.com/adilshaikh165/ML-OPS/assets/98637502/00b02108-2654-4803-83fb-f671efdb9544)
+
+
+Blog Link : https://adilshaikh165.hashnode.dev/cloud-native-monitoring-application
 
 
 
