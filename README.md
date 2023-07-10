@@ -272,7 +272,8 @@ kf-pipeline.ipynb
 
   I have mapped various attributes of the column "job" into the static float values and perform "One-hot" encoding on marital column.
   
-    ![Step4](https://github.com/adilshaikh165/ML-OPS/assets/98637502/0aa88e18-a3f2-4784-be37-c0091a6e6497)
+    ![FinalPipeline](https://github.com/adilshaikh165/ML-OPS/assets/98637502/11325c33-fd6c-48c8-9069-b79226e1c8f5)
+
 
 
 ## 6. Kubernetes Deployment for the Best Model.(OPTIONAL)
