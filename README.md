@@ -281,7 +281,7 @@ Kindly refer this blog link where I have explained deeply about the Kubeflow on 
 
 Blog link : https://adilshaikh165.hashnode.dev/mlflow-integration-with-kubeflow-on-charmed-kubeflow
 
-## 6. Kubernetes Deployment for the Best Model.(OPTIONAL)
+## 7. Kubernetes Deployment for the Best Model.(OPTIONAL)
 
 Because of the time constraint I was not able to deploy the ML model on Kubernetes Cluster. But I was able to do it very easily because in my previous project I was done the same deployment only the difference was that was the Python Flask Application and not the ML Model. But the procedures are the same for deployment to the kubernetes cluster.
 The best model in our case is "Optimized Model" from step "4b".
