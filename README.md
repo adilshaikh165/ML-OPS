@@ -275,6 +275,11 @@ kf-pipeline.ipynb
     ![FinalPipeline](https://github.com/adilshaikh165/ML-OPS/assets/98637502/11325c33-fd6c-48c8-9069-b79226e1c8f5)
 
 
+## 6. Integration of the MLflow on the charmed Kubeflow as well as artifacts storage for all the data outputs in the model using MINIO
+
+Kindly refer this blog link where I have explained deeply about the Kubeflow on the charmed kubeflow using "microk8s". This stable version of Charmed KUbeflow removes all the drawbacks of the traditional kubeflow.
+
+Blog link : https://adilshaikh165.hashnode.dev/mlflow-integration-with-kubeflow-on-charmed-kubeflow
 
 ## 6. Kubernetes Deployment for the Best Model.(OPTIONAL)
 
