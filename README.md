@@ -267,23 +267,11 @@ kf-pipeline.ipynb
 
 ## 6. Integration of the MLflow on the charmed Kubeflow as well as artifacts storage for all the data outputs in the model using MINIO
 
-Kindly refer this blog link where I have explained deeply about the Kubeflow on the charmed kubeflow using "microk8s". This stable version of Charmed KUbeflow removes all the drawbacks of the traditional kubeflow.
+Kindly refer this blog link where I have explained deeply about the Kubeflow on the charmed kubeflow using "microk8s". This stable version of Charmed Kubeflow removes all the drawbacks of the traditional or local deployment of kubeflow.
 
 Blog link : https://adilshaikh165.hashnode.dev/mlflow-integration-with-kubeflow-on-charmed-kubeflow
 
-## 7. Kubernetes Deployment for the Best Model.(OPTIONAL)
 
-Because of the time constraint I was not able to deploy the ML model on Kubernetes Cluster. But I was able to do it very easily because in my previous project I was done the same deployment only the difference was that was the Python Flask Application and not the ML Model. But the procedures are the same for deployment to the kubernetes cluster.
-The best model in our case is "Optimized Model" from step "4b".
-
-You can refer this blog of my previous project it contains all the deployment part to the kubernetes cluster and exposing it as service
-
-The procedure will be some what like this:
-
-![image](https://github.com/adilshaikh165/ML-OPS/assets/98637502/00b02108-2654-4803-83fb-f671efdb9544)
-
-
-Blog Link : https://adilshaikh165.hashnode.dev/cloud-native-monitoring-application
 
 
 
