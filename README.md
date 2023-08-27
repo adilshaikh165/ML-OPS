@@ -1,4 +1,4 @@
-# ML-OPS Task for AI-PLANET Internship
+# Leveraging ML-OPS tools for model deployment on Kubernetes.
 
 ## Project Title: Implementing Kubeflow with MLflow for Model Experiment Tracking
 
@@ -19,18 +19,8 @@ performance of a model on a dataset.
 4. Use the Kubeflow pipeline system to run multiple experiments with different
 hyperparameters and track them with MLflow
 5. Compare the performance of the different models using the MLflow UI
-6. Deploy the best model as a Kubernetes deployment and expose it as a service (this is
-optional).
+6. Integration of the MLflow on the charmed Kubeflow as well as artifacts storage for all the data outputs in the model using MINIO
 
-## Deliverables:
-
-1. A Kubeflow cluster set up with MLflow integration
-2. A Python script for training and logging model experiments with MLflow
-3. A Kubeflow pipeline for running multiple experiments and tracking them with MLflow
-4. A report summarizing the results of the experiments and the performance of the best
-model
-5. A Kubernetes deployment for the best model, along with instructions for accessing the
-service (this is optional).
 
 ## Steps to be followed
 
